@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ public class CalculatorView implements Initializable {
 
     @FXML public TilePane buttons;
     @FXML public TextField textf;
+    @FXML public VBox layout;
 
 //    private final Map<String, Button> accelerators = new HashMap<>();
 
