@@ -2,9 +2,7 @@ package calculator;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,9 +20,10 @@ public class CalculatorView implements Initializable {
     @FXML public TilePane buttons;
     @FXML public TextField textf;
 
-    public void setController(CalculatorController cc){
+//    private final Map<String, Button> accelerators = new HashMap<>();
+
+    public void setCon(CalculatorController cc){
         controller = cc;
-//        tfvalue.bind(controller.getValue());
         textf.textProperty().bind(Bindings.format("%.0f", tfvalue));
     }
 
@@ -51,8 +50,8 @@ public class CalculatorView implements Initializable {
         if (s.matches("[0-9]")) {
             makeNumericButton(s, button);
         } else {
-            final ObjectProperty<Op> triggerOp = determineOperand(s);
-            if (triggerOp.get() != Op.NOOP) {
+            final Op triggerOp = determineOperand(s);
+            if (triggerOp != Op.NOOP) {
                 makeOperandButton(button, triggerOp);
             } else if ("c".equals(s)) {
                 makeClearButton(button);
@@ -64,59 +63,67 @@ public class CalculatorView implements Initializable {
         return button;
     }
 
-    private ObjectProperty<Op> determineOperand(String s) {
-        final ObjectProperty<Op> triggerOp = new SimpleObjectProperty<>(Op.NOOP);
+    private Op determineOperand(String s) {
+        Op triggerOp = Op.NOOP;
         switch (s) {
             case "+":
-                triggerOp.set(Op.ADD);
+                triggerOp = Op.ADD;
                 break;
             case "-":
-                triggerOp.set(Op.SUBTRACT);
+                triggerOp = Op.SUBTRACT;
                 break;
             case "*":
-                triggerOp.set(Op.MULTIPLY);
+                triggerOp = Op.MULTIPLY;
                 break;
             case "/":
-                triggerOp.set(Op.DIVIDE);
+                triggerOp = Op.DIVIDE;
                 break;
         }
         return triggerOp;
     }
 
-    private void makeOperandButton(Button button, final ObjectProperty<Op> triggerOp) {
+    private void makeOperandButton(Button button, final Op boundOp) {
         button.setOnAction(actionEvent -> {
-            controller.setCurOp(triggerOp.get());
+            controller.setCurOp(boundOp);
             controller.setValue(tfvalue.get());
+            tfvalue.set(0);
         });
     }
 
     private Button makeStandardButton(String s) {
         Button button = new Button(s);
 //        accelerators.put(s, button);
-//        button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         return button;
     }
 
+    /*
+        This function can help us enable hotkeys, should we wish to later.
+     */
+//    private void handleAccelerators(VBox layout) {
+//        layout.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+//            Button activated = accelerators.get(keyEvent.getText());
+//            if (activated != null) {
+//                activated.fire();
+//            }
+//        });
+//    }
+
 
     private void makeNumericButton(final String s, Button button) {
-        button.setOnAction(actionEvent -> {
-//            if (controller.getCurOp() == Op.NOOP) {
-                tfvalue.set(tfvalue.get() * 10 + Integer.parseInt(s));
-//            } else {
-//                controller.setValue(tfvalue.get());
-//                controller.setStackValue(tfvalue.get());
-//                controller.setValue(Integer.parseInt(s));
-//                controller.setStackOp(controller.getCurOp());
-//                controller.setCurOp(Op.NOOP);
-//            }
-        });
+        button.setOnAction(actionEvent -> tfvalue.set(tfvalue.get() * 10 + Integer.parseInt(s)));
     }
 
     private void makeClearButton(Button button) {
-        button.setOnAction(actionEvent -> controller.setValue(0));
+        button.setOnAction(actionEvent -> {
+            controller.setValue(0);
+            tfvalue.setValue(0);
+        });
     }
 
     private void makeEqualsButton(Button button) {
-        button.setOnAction(actionEvent -> tfvalue.set(controller.calculate()));
+        button.setOnAction(actionEvent -> {
+            controller.setValue(tfvalue.get());
+            tfvalue.set(controller.calculate());
+        });
     }
 }
