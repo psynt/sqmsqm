@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
@@ -7,6 +8,9 @@
 <VBox fx:id="layout" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calculator.CalculatorView">
    <children>
       <TextField fx:id="textf" alignment="CENTER_RIGHT" editable="false" />
-      <TilePane fx:id="buttons" hgap="7.0" prefColumns="4" prefRows="4" vgap="7.0" />
+      <TilePane fx:id="buttons" alignment="CENTER" hgap="7.0" prefColumns="4" prefRows="4" vgap="7.0" />
    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </VBox>
