@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestPlus extends TestBase {
     @Test
-    public void plusTest() throws Exception{
+    public void plusTest() {
         clickOn("8");
         clickOn("+");
         clickOn("5");
