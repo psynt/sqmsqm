@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestMinus extends TestBase {
     @Test
-    public void plusTest() {
+    public void minusTest() {
         clickOn("8");
         clickOn("-");
         clickOn("5");
