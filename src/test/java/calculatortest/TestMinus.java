@@ -20,4 +20,5 @@ public class TestMinus extends TestBase {
         assertEquals(((TextField)find("#textf")).getText(), "3");
     }
 
+   
 }
