@@ -171,3 +171,4 @@ local.properties
 .classpath
 .project
 sqmsqm/.project
+/src/test/resources/.~lock.testDate.csv#

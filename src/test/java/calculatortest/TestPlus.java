@@ -6,6 +6,7 @@ import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.Assert.assertEquals;
 
+@Deprecated
 public class TestPlus extends TestBase {
     @Test
     public void plusTest() {
