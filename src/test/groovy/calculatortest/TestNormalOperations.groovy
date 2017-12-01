@@ -5,6 +5,9 @@ import org.junit.Before
 import org.junit.Test
 import org.testfx.util.WaitForAsyncUtils
 
+import java.util.concurrent.TimeoutException
+
+import static com.xlson.groovycsv.CsvParser.parseCsv
 import static org.junit.Assert.assertEquals
 
 class TestNormalOperations extends TestBase{
@@ -12,26 +15,41 @@ class TestNormalOperations extends TestBase{
     @Before
     void setUpClass() throws Exception {
         super.setUpClass()
+    }
 
+    @Override
+    void afterEachTest() throws TimeoutException {
+        super.afterEachTest()
+    }
+
+    @Override
+    String toString() {
+        return super.toString()
     }
 
     @Test
     void testOperations(){
 
+        List<Map<String,String>> test_data = new ArrayList<Map<String,String>>()
+        println new File(".").getAbsolutePath()
+        def data = parseCsv(new FileReader("build/resources/test/testData.csv"))
+        data.each {test_data << (["a":it.a, "b":it.b, "+":it.add, "-":it.sub, "*":it.mul, "/":it.div] as Map<String,String>)}
+
         def operators = ["+","-","*","/"]
-        def results = [13,3,40,1]
 
-        operators.eachWithIndex { String it, int i ->
-            clickOn("8")
-            clickOn(it)
-            clickOn("5")
-            clickOn("=")
+        test_data.each { Map<String,String> entry ->
+            operators.each { String op ->
+                clickOn entry.get('a')
+                clickOn op
+                clickOn entry.get('b')
+                clickOn "="
 
-            WaitForAsyncUtils.waitForFxEvents()
+                WaitForAsyncUtils.waitForFxEvents()
 
-            assertEquals(((TextField)find("#textf")).getText(), results[i].toString())
+                assertEquals(((TextField) find("#textf")).getText(), entry[op])
 
-            clickOn("c")
+                clickOn "c"
+            }
         }
     }
 }
