@@ -31,14 +31,12 @@ class TestNormalOperations extends TestBase{
     void testOperations(){
 
         List<Map<String,String>> test_data = new ArrayList<Map<String,String>>()
-        println new File(".").getAbsolutePath()
         def data = parseCsv(new FileReader("build/resources/test/testData.csv"))
         data.each {test_data << (["a":it.a, "b":it.b, "+":it.add, "-":it.sub, "*":it.mul, "/":it.div] as Map<String,String>)}
-
-        def operators = ["+","-","*","/"]
+        def operations = ["+","-","*","/"]
 
         test_data.each { Map<String,String> entry ->
-            operators.each { String op ->
+            operations.each { String op ->
                 clickOn entry.get('a')
                 clickOn op
                 clickOn entry.get('b')

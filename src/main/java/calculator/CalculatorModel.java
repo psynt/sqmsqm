@@ -6,12 +6,6 @@ public class CalculatorModel {
     private double previous;
     private double current;
 
-//    private CalculatorController controller;
-//
-//    public void setController(CalculatorController cc){
-//        controller = cc;
-//    }
-
     public void setOp(Op op) {
         this.op = op;
     }

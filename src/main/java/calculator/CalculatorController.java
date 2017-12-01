@@ -3,11 +3,6 @@ package calculator;
 public class CalculatorController {
 
     private CalculatorModel model;
-//    private CalculatorView view;
-//
-//    public void setView(CalculatorView vw){
-//        view = vw;
-//    }
 
     public void setModel(CalculatorModel mo){
         model = mo;
