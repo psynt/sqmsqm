@@ -44,7 +44,7 @@ class TestNormalOperations extends TestBase{
 
                 WaitForAsyncUtils.waitForFxEvents()
 
-                assertEquals(((TextField) find("#textf")).getText(), entry[op])
+                assertEquals(entry[op], ((TextField) find("#textf")).getText())
 
                 clickOn "c"
             }
