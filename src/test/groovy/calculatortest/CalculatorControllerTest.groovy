@@ -2,12 +2,14 @@ package calculatortest
 
 import calculator.CalculatorController
 import calculator.CalculatorModel
-import calculator.Op
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
+import static calculator.Op.NOOP
+import static calculator.Op.fromString
+import static Double.parseDouble
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
 class CalculatorControllerTest extends Specification {
@@ -24,9 +26,7 @@ class CalculatorControllerTest extends Specification {
             test_data << ["a":it.a , "b":it.b , "op":"-", "res":it."-"]
             test_data << ["a":it.a , "b":it.b , "op":"*", "res":it."*"]
             test_data << ["a":it.a , "b":it.b , "op":"/", "res":it."/"]
-
         }
-
     }
 
     @Unroll
@@ -37,15 +37,15 @@ class CalculatorControllerTest extends Specification {
         controller.setModel(new CalculatorModel())
 
         when:
-        controller.setCurOp Op.fromString(op)
-        controller.setValue Double.parseDouble(a)
-        controller.setValue Double.parseDouble(b)
+        controller.setCurOp fromString(op)
+        controller.setValue parseDouble(a)
+        controller.setValue parseDouble(b)
         def result = controller.calculate()
 
         then:
-        result == Double.parseDouble(res)
+        result == parseDouble(res)
         result == controller.getValue()
-        Op.NOOP == controller.getCurOp()
+        NOOP == controller.getCurOp()
 
         where:
         entry << test_data
