@@ -13,7 +13,8 @@ class TestAbusiveBehaviour extends TestBase {
 
         def many = 42
         def res = "5" * 41 + 7
-        many.times { clickOn "5" }
+        def five = find "5"
+        many.times { clickOn five }
         clickOn "+"
         clickOn "2"
         clickOn "="

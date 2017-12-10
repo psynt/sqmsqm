@@ -5,7 +5,9 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin:'application'
 
+mainClassName = "calculator.Calc"
 sourceCompatibility = 1.8
 
 repositories {
